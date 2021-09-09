@@ -27,6 +27,8 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
+// Below is a function for sepia, perfoming a quick check after converting an RBG val for sepia.
+
 int rgbValCheck(int sepiaCalculatedVal)
 {
     if (sepiaCalculatedVal > 255)
@@ -73,5 +75,3 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 {
     return;
 }
-
-
