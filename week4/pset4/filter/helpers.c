@@ -67,6 +67,34 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
+
+    // Must go row by row, and re-sort the pixels.
+    // Reverse each row
+
+    // Since we are effectively doing a swap, we need a temp
+
+    RGBTRIPLE temp_pixel;
+
+    for(int i = 0; i < height; i++){
+
+        for(int j = 0; j < width / 2; j++){
+
+        // assign the temp before we start replacing the pixel
+
+        temp_pixel = image[i][j];
+
+        // take the pixel @ RHS index, and throw to LHS index
+
+        image[i][j] = image[i][width - j - 1];
+
+        // replace the value you just copied, with the temp
+
+        image[i][width - j - 1] = temp_pixel;
+
+
+        }
+    }
+
     return;
 }
 
