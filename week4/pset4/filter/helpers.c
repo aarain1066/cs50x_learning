@@ -101,5 +101,82 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
+
+    // In the furture, consider using macros and/or functions to reduce repetitiveness of code.
+    // Using macros/functions not in the cannon of the course, and don't want to trip testing.
+
+    /* For now, I will set the relative values here, so I can copy-paste them where needed
+
+    ! ! ! NOTE: This is NOT a reccommended practice. The ideal method is again, leveraging
+    macros/functions. This is only done to speed up coding and help the reader in comprehension
+    of code. My personal preference is not not copy and paste.
+
+    Assume "i" is indexing through rows and "j" is indexing through cols.
+
+    North Pixel: image[i - 1][j]
+    North-East: image[i - 1][j + 1]
+    East: image[i][j + 1]
+    South-East: image[i + 1][j + 1]
+    South: image[i + 1][j]
+    South-West: image[i + 1][j - 1]
+    West: image[i][j - 1]
+    North-West: image[i - 1][j - 1]
+
+    */
+
+    /* For readability, I am going to explain the orientation of how I imagine the element as we
+    index through. I want you to think that the element we are currently on (at any given iteration) is
+    the "origin". Consider it as the sticker on a map that says "you are here". First, lets
+    consider the case where you are not near a boundry (i.e. you are surrounded by pixels in every
+    immediate direction). The pixel directly above you is the "North" pixel. The pixel below you is
+    the "South" pixel, and so on. Then, diagonally, the pixel to above-and-to-the-right of you is
+    the "North West || NW" pixel. And so on. This nomenclature will help you read the code as
+    we consider where we are at in the 2-d Array. This is going to help us understand which cases
+    where we are encountering an edge in the array (where a pixel/pixels are missing in any direction). */
+
+    RGBTRIPLE blurred_pixel;
+    int avg_blue;
+    int avg_green;
+    int avg_red;
+
+    for(int i = 0; i < height; i++){
+
+        for(int j = 0; j < height; j++){
+
+            /* Here we start indexing through the array. Imagine we start at the very top-left pixel. Then
+            we continue to index through the top row until we hit the end. Then we skip down to the next
+            row and continue (left to right) all the way to the bottom right pixel */
+
+            // Case: Where we are at top left of image (image[0][0])
+            // Pixels to consider: East (E) image[i][j+1], South-East (SE) image[i + 1][j+1], and South (S) image[i + 1][j]
+
+            if(i = 0 && j = 0){
+
+                avg_blue = round(( image[i][j+1].rgbtBlue + image[i + 1][j + 1].rgbtBlue + image[i + 1][j].rgbtBlue ) / 3 );
+                avg_green = round(( image[i][j+1].rgbtGreen + image[i + 1][j + 1].rgbtGreen + image[i + 1][j].rgbtGreen ) / 3);
+                avg_red = round(( image[i][j+1].rgbtRed + image[i + 1][j + 1].rgbtRed + image[i + 1][j].rgbtRed ) / 3);
+
+                image[i][j].rgbtBlue = avg_blue;
+                image[i][j].rgbtGreen = avg_green;
+                image[i][j].rgbtRed = avg_red;
+
+            }
+
+            // Now, moving along the top row (after first pixel until til _right_before_ the last pixel).
+
+            // Case: Where we traverse top row until we encounter the last pixel
+
+            if(i = 0 && j != (width - 1)){
+
+                // Consider only the E, SE, S, SW, and W pixels
+
+
+            }
+
+
+
+        }
+    }
+
     return;
 }
