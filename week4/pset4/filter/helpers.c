@@ -153,7 +153,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             edges, then the more general case of just a regular element surrounded by elements in every direction.*/
 
 
-            // Case: Where we are at top left of image (image[0][0])
+            // Case: Where we are at top left of image (image[0][0]) (corner)
             // Pixels to consider: East (E) image[i][j + 1], South-East (SE) image[i + 1][j + 1], and South (S) image[i + 1][j] and origin [i][j]
 
             if(i == 0 && j == 0){
@@ -200,7 +200,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             }
 
-            // Case: where we hit the far-right and bottom pixel
+            // Case: where we hit the bottom right pixel
 
             if(i == (height - 1) && j == (width - 1)){
 
@@ -217,11 +217,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             }
 
-
-
-            // Now, moving along the top row (after first pixel until til _right_before_ the last pixel).
-
-            // Case: Where we traverse top row until we encounter the last pixel
+            // Now, moving along the top row (after first pixel until til _right_before_ the last pixel). (edge, top)
 
             if(i == 0 && j != (width - 1)){
 
@@ -237,11 +233,25 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             }
 
+            // Case: where we are at any (RHS) edge of the array, that is not the top right corner (edge)
+
+            if(i > 0 && j == (width - 1)){
+
+                // Consider the N, NW, W, SW, S, and origin[i][j] pixels
+
+                avg_blue = round( (image[i - 1][j].rgbtBlue + image[i - 1][j - 1].rgbtBlue + image[i][j - 1].rgbtBlue + image[i + 1][j - 1].rgbtBlue + image[i + 1][j].rgbtBlue + image[i][j].rgbtBlue ) / 6 );
+                avg_green = round( (image[i - 1][j].rgbtGreen + image[i - 1][j - 1].rgbtGreen + image[i][j - 1].rgbtGreen + image[i + 1][j - 1].rgbtGreen + image[i + 1][j].rgbtGreen + image[i][j].rgbtGreen ) / 6 );
+                avg_red = round( (image[i - 1][j].rgbtRed + image[i - 1][j - 1].rgbtRed + image[i][j - 1].rgbtRed + image[i + 1][j - 1].rgbtRed + image[i + 1][j].rgbtRed + image[i][j].rgbtRed ) / 6 );
+
+                image[i][j].rgbtBlue = avg_blue;
+                image[i][j].rgbtRed = avg_red;
+                image[i][j].rgbtGreen = avg_green;
+
+            }
 
 
 
-
-            // Case: where are at any left-hand-side (LHS) edge of the array that is not the top left corner
+            // Case: where are at any left-hand-side (LHS) edge of the array that is not the top left corner (edge)
 
             if(i > 0 && j == 0){
 
@@ -257,12 +267,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             }
 
-            // Case: where we are at any (RHS) edge of the array, that is not the top right corner
 
-            if(i > 0 && j == (width - 1)){
-
-                continue;
-            }
 
             // Case: Where our origin (Recall: Origin is our element currently indexed within the loop) is surrounded by elements
 
