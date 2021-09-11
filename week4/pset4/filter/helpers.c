@@ -233,7 +233,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             }
 
-            // Case: where we are at any (RHS) edge of the array, that is not the top right corner (edge)
+            // Case: where we are at any (RHS) edge of the array, that is not the top right corner (edge, right)
 
             if(i > 0 && j == (width - 1)){
 
@@ -250,8 +250,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             }
 
 
-
-            // Case: where are at any left-hand-side (LHS) edge of the array that is not the top left corner (edge)
+            // Case: where are at any left-hand-side (LHS) edge of the array that is not the top left corner (edge, left)
 
             if(i > 0 && j == 0){
 
@@ -264,6 +263,23 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 image[i][j].rgbtBlue = avg_blue;
                 image[i][j].rgbtRed = avg_red;
                 image[i][j].rgbtGreen = avg_green;
+
+            }
+
+            // Case: where we are at the bottom edge of the array, that again is not a corner. (edge, bottom)
+
+            if(i == (height - 1) && j > 0){
+
+                // Consider only the W, NW, N, NE, E, and origin[i][j] pixels
+
+                avg_blue = round( (image[i][j - 1].rgbtBlue + image[i - 1][j - 1].rgbtBlue + image[i - 1][j].rgbtBlue + image[i - 1][j + 1].rgbtBlue + image[i][j + 1].rgbtBlue + image[i][j].rgbtBlue)  / 6 );
+                avg_green = round( (image[i][j - 1].rgbtGreen + image[i - 1][j - 1].rgbtGreen + image[i - 1][j].rgbtGreen + image[i - 1][j + 1].rgbtGreen + image[i][j + 1].rgbtGreen + image[i][j].rgbtGreen)  / 6 );
+                avg_red = round( (image[i][j - 1].rgbtRed + image[i - 1][j - 1].rgbtRed + image[i - 1][j].rgbtRed + image[i - 1][j + 1].rgbtRed + image[i][j + 1].rgbtRed + image[i][j].rgbtRed)  / 6 );
+
+                image[i][j].rgbtBlue = avg_blue;
+                image[i][j].rgbtGreen = avg_green;
+                image[i][j].rgbtRed = avg_red;
+
 
             }
 
