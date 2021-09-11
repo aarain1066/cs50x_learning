@@ -283,12 +283,22 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             }
 
+            else{
             // Case: Where our origin (Recall: Origin is our element currently indexed within the loop) is surrounded by elements
 
+            // Congrats! We finally made it!
 
+            // Consider all directions, starting with N and moving clockwise, then origin[i][j]
 
+            avg_blue = round( (image[i - 1][j].rgbtBlue + image[i - 1][j + 1].rgbtBlue + image[i][j + 1].rgbtBlue + image[i + 1][j + 1].rgbtBlue + image[i + 1][j].rgbtBlue + image[i + 1][j - 1].rgbtBlue + image[i][j - 1].rgbtBlue + image[i - 1][j - 1].rgbtBlue + image[i][j].rgbtBlue) / 9 );
+            avg_green = round( (image[i - 1][j].rgbtGreen + image[i - 1][j + 1].rgbtGreen + image[i][j + 1].rgbtGreen + image[i + 1][j + 1].rgbtGreen + image[i + 1][j].rgbtGreen + image[i + 1][j - 1].rgbtGreen + image[i][j - 1].rgbtGreen + image[i - 1][j - 1].rgbtGreen + image[i][j].rgbtGreen) / 9 );
+            avg_red = round( (image[i - 1][j].rgbtRed + image[i - 1][j + 1].rgbtRed + image[i][j + 1].rgbtRed + image[i + 1][j + 1].rgbtRed + image[i + 1][j].rgbtRed + image[i + 1][j - 1].rgbtRed + image[i][j - 1].rgbtRed + image[i - 1][j - 1].rgbtRed + image[i][j].rgbtRed) / 9 );
 
+            image[i][j].rgbtBlue = avg_blue;
+            image[i][j].rgbtGreen = avg_green;
+            image[i][j].rgbtRed = avg_red;
 
+            }
         }
     }
 
