@@ -102,6 +102,8 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
 
+    // This may look daunting, but this is just a problem with 9 scenarios.
+
     // In the furture, consider using macros and/or functions to reduce repetitiveness of code.
     // Using macros/functions not in the cannon of the course, and don't want to trip testing.
 
@@ -113,6 +115,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
     Assume "i" is indexing through rows and "j" is indexing through cols.
 
+    Origin: image[i][j]
     North Pixel: image[i - 1][j]
     North-East: image[i - 1][j + 1]
     East: image[i][j + 1]
@@ -148,13 +151,13 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             row and continue (left to right) all the way to the bottom right pixel */
 
             // Case: Where we are at top left of image (image[0][0])
-            // Pixels to consider: East (E) image[i][j+1], South-East (SE) image[i + 1][j+1], and South (S) image[i + 1][j]
+            // Pixels to consider: East (E) image[i][j + 1], South-East (SE) image[i + 1][j + 1], and South (S) image[i + 1][j] and origin [i][j]
 
             if(i == 0 && j == 0){
 
-                avg_blue = round(( image[i][j+1].rgbtBlue + image[i + 1][j + 1].rgbtBlue + image[i + 1][j].rgbtBlue ) / 3 );
-                avg_green = round(( image[i][j+1].rgbtGreen + image[i + 1][j + 1].rgbtGreen + image[i + 1][j].rgbtGreen ) / 3);
-                avg_red = round(( image[i][j+1].rgbtRed + image[i + 1][j + 1].rgbtRed + image[i + 1][j].rgbtRed ) / 3);
+                avg_blue = round( (image[i][j + 1].rgbtBlue + image[i + 1][j + 1].rgbtBlue + image[i + 1][j].rgbtBlue + image[i][j].rgbtBlue) / 4 );
+                avg_green = round( (image[i][j + 1].rgbtGreen + image[i + 1][j + 1].rgbtGreen + image[i + 1][j].rgbtGreen + image[i][j].rgbtGreen) / 4 );
+                avg_red = round( (image[i][j + 1].rgbtRed + image[i + 1][j + 1].rgbtRed + image[i + 1][j].rgbtRed + image[i][j].rgbtRed) / 4 );
 
                 image[i][j].rgbtBlue = avg_blue;
                 image[i][j].rgbtGreen = avg_green;
@@ -168,7 +171,23 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             if(i == 0 && j != (width - 1)){
 
-                // Consider only the E, SE, S, SW, and W pixels
+                // Consider only the E, SE, S, SW, W, and origin[i][j] pixels
+
+                avg_blue = round( (image[i][j + 1].rgbtBlue + image[i + 1][j + 1].rgbtBlue + image[i + 1][j].rgbtBlue + image[i + 1][j - 1].rgbtBlue + image[i][j - 1].rgbtBlue + image[i][j].rgbtBlue)  / 6 );
+                avg_green = round( (image[i][j + 1].rgbtGreen + image[i + 1][j + 1].rgbtGreen + image[i + 1][j].rgbtGreen + image[i + 1][j - 1].rgbtGreen + image[i][j - 1].rgbtGreen + image[i][j].rgbtGreen)  / 6 );
+                avg_red = round( (image[i][j + 1].rgbtRed + image[i + 1][j + 1].rgbtRed + image[i + 1][j].rgbtRed + image[i + 1][j - 1].rgbtRed + image[i][j - 1].rgbtRed + image[i][j].rgbtRed)  / 6 );
+
+                image[i][j].rgbtBlue = avg_blue;
+                image[i][j].rgbtGreen = avg_green;
+                image[i][j].rgbtRed = avg_red;
+
+            }
+
+            // Case: where we hit the top-right pixel (corner)
+
+            if(i == 0 && j == (width -1)){
+
+                // Consider only the W, SW, S, and origin[i][j] pixels
 
 
             }
