@@ -150,7 +150,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             // Case: Where we are at top left of image (image[0][0])
             // Pixels to consider: East (E) image[i][j+1], South-East (SE) image[i + 1][j+1], and South (S) image[i + 1][j]
 
-            if(i = 0 && j = 0){
+            if(i == 0 && j == 0){
 
                 avg_blue = round(( image[i][j+1].rgbtBlue + image[i + 1][j + 1].rgbtBlue + image[i + 1][j].rgbtBlue ) / 3 );
                 avg_green = round(( image[i][j+1].rgbtGreen + image[i + 1][j + 1].rgbtGreen + image[i + 1][j].rgbtGreen ) / 3);
@@ -166,7 +166,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             // Case: Where we traverse top row until we encounter the last pixel
 
-            if(i = 0 && j != (width - 1)){
+            if(i == 0 && j != (width - 1)){
 
                 // Consider only the E, SE, S, SW, and W pixels
 
