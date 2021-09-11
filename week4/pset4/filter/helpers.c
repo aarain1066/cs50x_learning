@@ -233,7 +233,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             }
 
-            // Case: where we are at any (RHS) edge of the array, that is not the top right corner (edge, right)
+            // Case: where we are at (RHS) edge of the array, that is not the top right corner (edge, right)
 
             if(i > 0 && j == (width - 1)){
 
@@ -283,7 +283,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             }
 
-            else{
+            if(i > 0 && i != (height - 1) && j > 0 && j != (width - 1)){
             // Case: Where our origin (Recall: Origin is our element currently indexed within the loop) is surrounded by elements
 
             // Congrats! We finally made it!
