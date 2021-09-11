@@ -188,7 +188,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             if(i == (height - 1) && j == 0){
 
-                // Consider only the N, NE, E, and origin[i][j] pixels.
+                // Consider only the N, NE, E, and origin[i][j] pixels
 
                 avg_blue = round( ( image[i + 1][j].rgbtBlue + image[i + 1][j + 1].rgbtBlue + image[i][j + 1].rgbtBlue + image[i][j].rgbtBlue ) / 4 );
                 avg_green = round( ( image[i + 1][j].rgbtGreen + image[i + 1][j + 1].rgbtGreen + image[i][j + 1].rgbtGreen + image[i][j].rgbtGreen ) / 4 );
@@ -204,7 +204,17 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             if(i == (height - 1) && j == (width - 1)){
 
-                continue;
+                // Consider only the N, NW, W, and origin[i][j] pixels
+
+                avg_blue = round( ( image[i + 1][j].rgbtBlue + image[i + 1][j - 1].rgbtBlue + image[i][j - 1].rgbtBlue + image[i][j].rgbtBlue ) / 4 );
+                avg_green = round( ( image[i + 1][j].rgbtGreen + image[i + 1][j - 1].rgbtGreen + image[i][j - 1].rgbtGreen + image[i][j].rgbtGreen ) / 4 );
+                avg_red = round( (image[i + 1][j].rgbtRed + image[i + 1][j - 1].rgbtRed + image[i][j - 1].rgbtRed + image[i][j].rgbtRed ) / 4 );
+
+                image[i][j].rgbtBlue = avg_blue;
+                image[i][j].rgbtGreen = avg_green;
+                image[i][j].rgbtRed = avg_red;
+
+
             }
 
 
