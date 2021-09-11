@@ -190,9 +190,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
                 // Consider only the N, NE, E, and origin[i][j] pixels
 
-                avg_blue = round( ( image[i + 1][j].rgbtBlue + image[i + 1][j + 1].rgbtBlue + image[i][j + 1].rgbtBlue + image[i][j].rgbtBlue ) / 4 );
-                avg_green = round( ( image[i + 1][j].rgbtGreen + image[i + 1][j + 1].rgbtGreen + image[i][j + 1].rgbtGreen + image[i][j].rgbtGreen ) / 4 );
-                avg_red = round( (image[i + 1][j].rgbtRed + image[i + 1][j + 1].rgbtRed + image[i][j + 1].rgbtRed + image[i][j].rgbtRed ) / 4 );
+                avg_blue = round( ( image[i - 1][j].rgbtBlue + image[i - 1][j + 1].rgbtBlue + image[i][j + 1].rgbtBlue + image[i][j].rgbtBlue ) / 4 );
+                avg_green = round( ( image[i - 1][j].rgbtGreen + image[i - 1][j + 1].rgbtGreen + image[i][j + 1].rgbtGreen + image[i][j].rgbtGreen ) / 4 );
+                avg_red = round( (image[i - 1][j].rgbtRed + image[i - 1][j + 1].rgbtRed + image[i][j + 1].rgbtRed + image[i][j].rgbtRed ) / 4 );
 
                 image[i][j].rgbtBlue = avg_blue;
                 image[i][j].rgbtGreen = avg_green;
@@ -206,9 +206,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
                 // Consider only the N, NW, W, and origin[i][j] pixels
 
-                avg_blue = round( ( image[i + 1][j].rgbtBlue + image[i + 1][j - 1].rgbtBlue + image[i][j - 1].rgbtBlue + image[i][j].rgbtBlue ) / 4 );
-                avg_green = round( ( image[i + 1][j].rgbtGreen + image[i + 1][j - 1].rgbtGreen + image[i][j - 1].rgbtGreen + image[i][j].rgbtGreen ) / 4 );
-                avg_red = round( (image[i + 1][j].rgbtRed + image[i + 1][j - 1].rgbtRed + image[i][j - 1].rgbtRed + image[i][j].rgbtRed ) / 4 );
+                avg_blue = round( ( image[i - 1][j].rgbtBlue + image[i - 1][j - 1].rgbtBlue + image[i][j - 1].rgbtBlue + image[i][j].rgbtBlue ) / 4 );
+                avg_green = round( ( image[i - 1][j].rgbtGreen + image[i - 1][j - 1].rgbtGreen + image[i][j - 1].rgbtGreen + image[i][j].rgbtGreen ) / 4 );
+                avg_red = round( (image[i - 1][j].rgbtRed + image[i - 1][j - 1].rgbtRed + image[i][j - 1].rgbtRed + image[i][j].rgbtRed ) / 4 );
 
                 image[i][j].rgbtBlue = avg_blue;
                 image[i][j].rgbtGreen = avg_green;
@@ -282,8 +282,6 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
 
             }
-
-
 
             // Case: Where our origin (Recall: Origin is our element currently indexed within the loop) is surrounded by elements
 
