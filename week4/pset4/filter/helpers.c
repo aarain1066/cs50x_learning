@@ -144,7 +144,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
     for(int i = 0; i < height; i++){
 
-        for(int j = 0; j < height; j++){
+        for(int j = 0; j < width; j++){
 
             /* Here we start indexing through the array. Imagine we start at the very top-left pixel. Then
             we continue to index through the top row until we hit the end. Then we skip down to the next
@@ -170,7 +170,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             // Case: where we hit the top-right pixel (corner)
 
-            if(i == 0 && j == (width -1)){
+            if(i == 0 && j == (width - 1)){
 
                 // Consider only the W, SW, S, and origin[i][j] pixels
 
