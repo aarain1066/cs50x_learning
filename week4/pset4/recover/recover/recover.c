@@ -18,6 +18,10 @@ Implement a program called recover that recovers JPEGs from a forensic image.
 */
 
 
+// First, we must implement a space where we can read the buffer of `fread()` into
+
+// We can do this with malloc
+
 
 int main(int argc, char *argv[])
 {
