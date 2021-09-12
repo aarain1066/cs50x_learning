@@ -50,21 +50,29 @@ int main(int argc, char *argv[]){
 
     /* I think I'll want to index through the array, and if they four target bits are hit, then go on to fwrite a JPEG*/
 
+    // we have to have an iteration here, where fread will eventually depend on i
 
     int *read_data_buffer = malloc(sizeof(int) * 512);
 
-    fread(&read_data_buffer, (sizeof(int)*512), 1, raw_data);
+        if(read_data_buffer == NULL){
 
-    for(int i = 0; i < sizeof(read_data_buffer); i++){
+            printf("malloc error\n");
+            return 4;
 
-        if(read_data_buffer[i] == 0xff && read_data_buffer[i + 1] == 0xd8 && read_data_buffer[i + 2] == 0xff && (read_data_buffer[i + 3] & 0xf0) == 0xe0){
-
-            printf("working\n");
         }
-    }
 
-    fclose(raw_data);
-    free(read_data_buffer);
+    fread(read_data_buffer, sizeof(int) * 512, 1, raw_data);
+
+    // for(int i = 0; i < (sizeof(int) * 512); i++){
+
+    //     if(read_data_buffer[i] == 0xff && read_data_buffer[i + 1] == 0xd8 && read_data_buffer[i + 2] == 0xff && (read_data_buffer[i + 3] & 0xf0) == 0xe0){
+
+    //         printf("working\n");
+    //     }
+    // }
+
+    // fclose(raw_data);
+    // free(read_data_buffer);
 
 
 }
