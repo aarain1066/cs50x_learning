@@ -19,8 +19,6 @@ Implement a program called recover that recovers JPEGs from a forensic image.
 */
 
 
-// make a check that the pointer is NULL, and
-
 
 int main(int argc, char *argv[]){
 
@@ -49,7 +47,23 @@ int main(int argc, char *argv[]){
         return 3;
     }
 
-    // open a function where we begin to read the file
+
+    /* I think I'll want to index through the array, and if they four target bits are hit, then go on to fwrite a JPEG*/
+
+
+    int *read_data_buffer = malloc(512);
+
+    fread(&read_data_buffer, 512, 1, raw_data);
+
+    for(int i = 0; i < sizeof(read_data_buffer); i++){
+
+        if(read_data_buffer[i] == 0xff && read_data_buffer[i + 1] == 0xd8 && read_data_buffer[i + 2] == 0xff && (read_data_buffer[i + 3] & 0xf0) == 0xe0){
+
+            printf("working\n");
+        }
+    }
+
+
 
 
 }
