@@ -24,27 +24,25 @@ Implement a program called recover that recovers JPEGs from a forensic image.
 
 int main(int argc, char *argv[]){
 
+
+    // First test case, where if the arg count is too low
+
     if(argc < 2){
 
         printf("*** Error *** Usage: ./recover <__file_to_be_recovered__>\n");
         return 1;
     }
 
+    // Second test case, where if the arg count is too high
+
     if(argc > 2){
         printf("Too many arguments entered, please only enter the 1.) program, followed by the 2.) data to be recovered. \n");
         return 2;
     }
 
-    else{
+    // Passing the test cases, move on to opening the file to a pointer
 
-        printf("works!\n");
-
-    }
-
-
-    // First, we need to open a file before we can begin some action on it
-
-   // FILE *raw_data = fopen("card.raw", "r");
+    FILE *raw_data = fopen(argv[1], "r");
 
     // open a function where we begin to read the file
 
