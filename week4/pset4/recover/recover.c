@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 /*
 Implement a program called recover that recovers JPEGs from a forensic image.
 
@@ -18,12 +19,15 @@ Implement a program called recover that recovers JPEGs from a forensic image.
 */
 
 
-// First, we must implement a space where we can read the buffer of `fread()` into
-
-// We can do this with malloc
+// make a check that the pointer is NULL, and
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
+
+    // First, we must implement a space where we can read the buffer of `fread()` into
+
+    // We can do this with malloc
+
+    int *p_buffer = malloc(512);
 
 }
