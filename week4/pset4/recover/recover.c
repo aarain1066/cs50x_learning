@@ -24,10 +24,29 @@ Implement a program called recover that recovers JPEGs from a forensic image.
 
 int main(int argc, char *argv[]){
 
-    // First, we must implement a space where we can read the buffer of `fread()` into
+    if(argc < 2){
 
-    // We can do this with malloc
+        printf("*** Error *** Usage: ./recover <__file_to_be_recovered__>\n");
+        return 1;
+    }
 
-    int *p_buffer = malloc(512);
+    if(argc > 2){
+        printf("Too many arguments entered, please only enter the 1.) program, followed by the 2.) data to be recovered. \n");
+        return 2;
+    }
+
+    else{
+
+        printf("works!\n");
+
+    }
+
+
+    // First, we need to open a file before we can begin some action on it
+
+   // FILE *raw_data = fopen("card.raw", "r");
+
+    // open a function where we begin to read the file
+
 
 }
