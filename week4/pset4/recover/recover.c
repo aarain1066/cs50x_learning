@@ -51,9 +51,9 @@ int main(int argc, char *argv[]){
     /* I think I'll want to index through the array, and if they four target bits are hit, then go on to fwrite a JPEG*/
 
 
-    int *read_data_buffer = malloc(512);
+    int *read_data_buffer = malloc(sizeof(int) * 512);
 
-    fread(&read_data_buffer, 512, 1, raw_data);
+    fread(&read_data_buffer, (sizeof(int)*512), 1, raw_data);
 
     for(int i = 0; i < sizeof(read_data_buffer); i++){
 
@@ -63,7 +63,8 @@ int main(int argc, char *argv[]){
         }
     }
 
-
+    fclose(raw_data);
+    free(read_data_buffer);
 
 
 }
