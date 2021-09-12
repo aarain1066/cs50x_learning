@@ -63,16 +63,16 @@ int main(int argc, char *argv[]){
 
     fread(read_data_buffer, sizeof(int) * 512, 1, raw_data);
 
-    // for(int i = 0; i < (sizeof(int) * 512); i++){
+    for(int i = 0; i < (sizeof(int) * 512); i++){
 
-    //     if(read_data_buffer[i] == 0xff && read_data_buffer[i + 1] == 0xd8 && read_data_buffer[i + 2] == 0xff && (read_data_buffer[i + 3] & 0xf0) == 0xe0){
+        if(read_data_buffer[i] == 0xff && read_data_buffer[i + 1] == 0xd8 && read_data_buffer[i + 2] == 0xff && (read_data_buffer[i + 3] & 0xf0) == 0xe0){
 
-    //         printf("working\n");
-    //     }
-    // }
+            printf("working\n");
+        }
+    }
 
-    // fclose(raw_data);
-    // free(read_data_buffer);
+    fclose(raw_data);
+    free(read_data_buffer);
 
 
 }
