@@ -43,6 +43,11 @@ int main(int argc, char *argv[]){
     // Passing the test cases, move on to opening the file to a pointer
 
     FILE *raw_data = fopen(argv[1], "r");
+    if(raw_data == NULL){
+
+        printf("Could not open %s. \n ", argv[1]);
+        return 3;
+    }
 
     // open a function where we begin to read the file
 
