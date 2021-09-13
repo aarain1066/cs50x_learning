@@ -26,7 +26,6 @@ typedef uint8_t BYTE;
 
 int main(int argc, char *argv[]){
 
-
     // First test case, where if the arg count is too low
 
     if(argc < 2){
@@ -49,7 +48,8 @@ int main(int argc, char *argv[]){
 
     // Recall that argv[1] is the file name of the deleted data we are trying to recover, I think readability is better this way.
 
-    FILE* rawDataPointer = fopen(argv[1], "r");
+    char *rawData = argv[1];
+    FILE *rawDataPointer = fopen(rawData, "r");
     if(rawDataPointer == NULL){
 
         printf("Could not open %s. \n ", argv[1]);
@@ -59,30 +59,6 @@ int main(int argc, char *argv[]){
 
     // All check50 error checks pass at this point
 
-    /*
-    Error checking
-
-    open input file (memory card)
-
-    repeat this until end of memory card
-
-        read 512 bytes into some space, we can call this a buffer
-
-        if it is the first jpg ---> this means i'll need a counter
-            if it's the first jpg
-            write the first jpg
-        if it not the first jpg
-            close the current buffer
-            open a new buffer
-        else
-            if already found jpg
-                keep writing to it
-
-    end of memory card
-    free/close everything
-
-    */
-
     // Initialize What I need
 
     BYTE buffer[BUFFER_SIZE];
@@ -91,7 +67,7 @@ int main(int argc, char *argv[]){
 
     int imageCounter = 0;
 
-    FILE* newFilePointer = NULL;
+    FILE *newFilePointer = NULL;
 
     // ###.jpg'\0' = 8
     char imageNumberForName[8];
@@ -126,6 +102,7 @@ int main(int argc, char *argv[]){
 
         imageCounter++;
 
+    }
         // If we pass by the jpg header again, but if it's not the first file
 
         if(!(imageCounter == 0)){
@@ -136,7 +113,6 @@ int main(int argc, char *argv[]){
 
 
         }
-    }
 
     }
 
