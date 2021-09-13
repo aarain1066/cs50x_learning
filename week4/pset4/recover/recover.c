@@ -114,6 +114,11 @@ int main(int argc, char *argv[]){
 
             // This means it's the first JPEG
             sprintf(imageNumberForName, "03%i.jpg", image_counter);
+
+            // Now fwrite new file, using sprintf's new file name
+
+            fwrite(&buffer, BUFFER_SIZE, 1, new_file_pointer);
+
         }
     }
 
