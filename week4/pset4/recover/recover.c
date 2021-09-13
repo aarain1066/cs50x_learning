@@ -23,7 +23,6 @@ const int BUFFER_SIZE = 512;
 typedef uint8_t BYTE;
 
 
-
 int main(int argc, char *argv[]){
 
     // First test case, where if the arg count is too low
@@ -48,8 +47,8 @@ int main(int argc, char *argv[]){
 
     // Recall that argv[1] is the file name of the deleted data we are trying to recover, I think readability is better this way.
 
-    char *rawData = argv[1];
-    FILE *rawDataPointer = fopen(rawData, "r");
+    // Recall as well, the `fopen()` returns a pointer, therefore we derefence rawDataPointer to give it the val of an address
+    FILE *rawDataPointer = fopen(argv[1], "r");
     if(rawDataPointer == NULL){
 
         printf("Could not open %s. \n ", argv[1]);
