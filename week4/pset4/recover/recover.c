@@ -91,10 +91,34 @@ int main(int argc, char *argv[]){
 
     int image_counter = 0;
 
-    file_pointer == NULL;
+    FILE* new_file_pointer = NULL;
 
     // ###.jpg'\0' = 8
-    char imageNameAndNumber[8]
+    char imageNumberForName[8];
+
+    //repeat this until end of memory card
+
+        //read 512 bytes into some space, we can call this a buffer
+
+    while(fread(&buffer, BUFFER_SIZE, 1, rawDataPointer) == 1){
+
+    if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0){
+
+        // if it is not the first jpg, that means we are at a point in the loop where we have already found a picture
+        // Therefore, close the picture
+        if(image_counter != 0){
+            fclose(new_file_pointer);
+        }
+
+        if(image_counter == 0){
+
+            // This means it's the first JPEG
+            sprintf(imageNumberForName, "03%i.jpg", image_counter);
+        }
+    }
+
+    }
+
 
 
 
