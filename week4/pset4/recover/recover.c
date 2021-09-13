@@ -18,6 +18,7 @@ Implement a program called recover that recovers JPEGs from a forensic image.
 * Your program, if it uses malloc, must not leak any memory.
 */
 
+const int BLOCK_SIZE = 512;
 
 
 int main(int argc, char *argv[]){
@@ -35,7 +36,7 @@ int main(int argc, char *argv[]){
 
     if(argc > 2){
         printf("Too many arguments entered, please only enter the 1.) program, followed by the 2.) data to be recovered. \n");
-        return 2;
+        return 1;
     }
 
     // Passing the test cases, move on to opening the file to a pointer
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]){
     if(raw_data == NULL){
 
         printf("Could not open %s. \n ", argv[1]);
-        return 3;
+        return 1;
     }
 
 
@@ -52,7 +53,11 @@ int main(int argc, char *argv[]){
 
     // we have to have an iteration here, where fread will eventually depend on i
 
-    int *read_data_buffer = malloc(sizeof(int) * 512);
+
+
+    for(int j = 1; j < sizeof(*read_data_buffer); j++){
+        
+        int *read_data_buffer = malloc( (sizeof(int) * BLOCK_SIZE) * j);
 
         if(read_data_buffer == NULL){
 
@@ -61,19 +66,56 @@ int main(int argc, char *argv[]){
 
         }
 
-    fread(read_data_buffer, sizeof(int) * 512, 1, raw_data);
+        fread(read_data_buffer, sizeof(int) * BLOCK_SIZE, j, raw_data);
 
-    for(int i = 0; i < (sizeof(int) * 512); i++){
+        for(int i = 0; i < (sizeof(int) * BLOCK_SIZE); i++){
 
-        // This issue if my if statement, it's not finding the bit of that size. It only prints out B
 
-        if(read_data_buffer[i] == 0xff && read_data_buffer[i + 1] == 0xd8 && read_data_buffer[i + 2] == 0xff && (read_data_buffer[i + 3] & 0xf0) == 0xe0){
+        if(read_data_buffer[i] == 0xff) {
 
-            printf("!!! A !!!\n");
+            printf("okay first one is good\n");
+
+            if(read_data_buffer[i + 1] == 0xd8){
+
+                if(read_data_buffer[i + 2] == 0xff){
+
+                    printf("!!! A !!!\n");
+
+                }
+
+            }
+
         }
 
         else{printf("B\n");}
+     }
+
+
+
     }
+
+    // fread(read_data_buffer, sizeof(int) * BLOCK_SIZE, 1, raw_data);
+
+    // for(int i = 0; i < (sizeof(int) * BLOCK_SIZE); i++){
+
+    //     // This issue if my if statement, it's not finding the bit of that size. It only prints out B
+
+    //     if(read_data_buffer[i] == 0xff) {
+
+    //         if(read_data_buffer[i + 1] == 0xd8){
+
+    //             if(read_data_buffer[i + 2] == 0xff){
+
+    //                 printf("!!! A !!!\n");
+
+    //             }
+
+    //         }
+
+    //     }
+
+    //     else{printf("B\n");}
+    //  }
 
     fclose(raw_data);
     free(read_data_buffer);
