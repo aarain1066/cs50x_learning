@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
 
     int imageCounter = 0;
 
-    FILE* new_file_pointer = NULL;
+    FILE* newFilePointer = NULL;
 
     // ###.jpg'\0' = 8
     char imageNumberForName[8];
@@ -104,31 +104,35 @@ int main(int argc, char *argv[]){
 
     if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0){
 
-        // if it is not the first jpg, that means we are at a point in the loop where we have already found a picture
-        // Therefore, close the picture
+        // If it is not the first jpg, that means we are at a point in the loop where we are already writing a picture
+
+        // Therefore, close the "current" picture
+
         if(imageCounter != 0){
-            fclose(new_file_pointer);
+            fclose(newFilePointer);
         }
 
-        if(imageCounter == 0){
+        // Otherwise, let's create the file and name for it
 
-            // This means it's the first JPEG
-            // create the file and name for it, and to have it in write mode
+        // Create the name for the eventual file
 
-            // create the name for the eventual file
-            sprintf(imageNumberForName, "03%i.jpg", imageCounter);
-            // Open the file and give it the name created from `sprintf()`
-            new_file_pointer = fopen(imageNumberForName, "w");
-            // tick the image counter to keep a running track of the images generated.
-            imageCounter++;
+        sprintf(imageNumberForName, "03%i.jpg", imageCounter);
 
-        }
+        // Open the file and give it the name created from `sprintf()`
+
+        newFilePointer = fopen(imageNumberForName, "w");
+
+        // Tick the image counter to keep a running track of the images generated.
+
+        imageCounter++;
+
+        // If we pass by the jpg header again, but if it's not the first file
 
         if(imageCounter != 0){
 
             // If it's not the first image, keep writing to the file.
 
-        fwrite(&buffer, BUFFER_SIZE, 1, new_file_pointer);
+        fwrite(&buffer, BUFFER_SIZE, 1, newFilePointer);
 
 
         }
@@ -137,7 +141,8 @@ int main(int argc, char *argv[]){
     }
 
 fclose(rawDataPointer);
-fclose(new_file_pointer);
+fclose(newFilePointer);
+return 0;
 
 
 }
