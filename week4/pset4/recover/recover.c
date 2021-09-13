@@ -65,10 +65,14 @@ int main(int argc, char *argv[]){
 
     for(int i = 0; i < (sizeof(int) * 512); i++){
 
+        // This issue if my if statement, it's not finding the bit of that size. It only prints out B
+
         if(read_data_buffer[i] == 0xff && read_data_buffer[i + 1] == 0xd8 && read_data_buffer[i + 2] == 0xff && (read_data_buffer[i + 3] & 0xf0) == 0xe0){
 
-            printf("working\n");
+            printf("!!! A !!!\n");
         }
+
+        else{printf("B\n");}
     }
 
     fclose(raw_data);
