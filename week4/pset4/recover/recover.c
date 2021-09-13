@@ -116,7 +116,7 @@ int main(int argc, char *argv[]){
 
         // Create the name for the eventual file
 
-        sprintf(imageNumberForName, "03%i.jpg", imageCounter);
+        sprintf(imageNumberForName, "%03i.jpg", imageCounter);
 
         // Open the file and give it the name created from `sprintf()`
 
