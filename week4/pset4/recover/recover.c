@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 
 /*
@@ -19,6 +20,8 @@ Implement a program called recover that recovers JPEGs from a forensic image.
 */
 
 const int BLOCK_SIZE = 512;
+typedef uint8_t BYTE;
+
 
 
 int main(int argc, char *argv[]){
@@ -41,18 +44,51 @@ int main(int argc, char *argv[]){
 
     // Passing the test cases, move on to opening the file to a pointer
 
-    FILE *raw_data = fopen(argv[1], "r");
-    if(raw_data == NULL){
+
+    // `fopen()` takes in a pointer as it's first arg.
+
+    // Recall that argv[1] is the file name of the deleted data we are trying to recover, I think readability is better this way.
+
+    FILE* rawDataPointer = fopen(argv[1], "r");
+    if(rawDataPointer == NULL){
 
         printf("Could not open %s. \n ", argv[1]);
         return 1;
     }
+    // raw data is now fed at pointer rawDataPointer
 
-    // All error checks pass at this point
+    // All check50 error checks pass at this point
+
+    /*
+    Error checking
+
+    open input file (memory card)
+
+    repeat this until end of memory card
+
+        read 512 bytes into some space, we can call this a buffer
+
+        if it is the first jpg ---> this means i'll need a counter
+            if it's the first jpg
+            write the first jpg
+        if it not the first jpg
+            close the current buffer
+            open a new buffer
+        else
+            if already found jpg
+                keep writing to it
+
+    end of memory card
+    free/close everything
+
+    */
 
 
 
 
 
+
+
+// close raw_data
 
 }
