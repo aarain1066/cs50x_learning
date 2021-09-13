@@ -89,7 +89,7 @@ int main(int argc, char *argv[]){
 
     // To keep track of images
 
-    int image_counter = 0;
+    int imageCounter = 0;
 
     FILE* new_file_pointer = NULL;
 
@@ -106,32 +106,38 @@ int main(int argc, char *argv[]){
 
         // if it is not the first jpg, that means we are at a point in the loop where we have already found a picture
         // Therefore, close the picture
-        if(image_counter != 0){
+        if(imageCounter != 0){
             fclose(new_file_pointer);
         }
 
-        if(image_counter == 0){
+        if(imageCounter == 0){
 
             // This means it's the first JPEG
-            sprintf(imageNumberForName, "03%i.jpg", image_counter);
+            // create the file and name for it, and to have it in write mode
 
-            // Now fwrite new file, using sprintf's new file name
+            // create the name for the eventual file
+            sprintf(imageNumberForName, "03%i.jpg", imageCounter);
+            // Open the file and give it the name created from `sprintf()`
+            new_file_pointer = fopen(imageNumberForName, "w");
+            // tick the image counter to keep a running track of the images generated.
+            imageCounter++;
 
-            fwrite(&buffer, BUFFER_SIZE, 1, new_file_pointer);
+        }
+
+        if(imageCounter != 0){
+
+            // If it's not the first image, keep writing to the file.
+
+        fwrite(&buffer, BUFFER_SIZE, 1, new_file_pointer);
+
 
         }
     }
 
     }
 
+fclose(rawDataPointer);
+fclose(new_file_pointer);
 
-
-
-
-
-
-
-
-// close raw_data
 
 }
