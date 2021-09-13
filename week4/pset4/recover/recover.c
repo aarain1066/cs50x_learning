@@ -108,7 +108,7 @@ int main(int argc, char *argv[]){
 
         // Therefore, close the "current" picture
 
-        if(imageCounter != 0){
+        if(!(imageCounter == 0)){
             fclose(newFilePointer);
         }
 
@@ -128,7 +128,7 @@ int main(int argc, char *argv[]){
 
         // If we pass by the jpg header again, but if it's not the first file
 
-        if(imageCounter != 0){
+        if(!(imageCounter == 0)){
 
             // If it's not the first image, keep writing to the file.
 
