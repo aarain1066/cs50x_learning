@@ -19,7 +19,7 @@ Implement a program called recover that recovers JPEGs from a forensic image.
 * Your program, if it uses malloc, must not leak any memory.
 */
 
-const int BLOCK_SIZE = 512;
+const int BUFFER_SIZE = 512;
 typedef uint8_t BYTE;
 
 
@@ -82,6 +82,20 @@ int main(int argc, char *argv[]){
     free/close everything
 
     */
+
+    // Initialize What I need
+
+    BYTE buffer[BUFFER_SIZE];
+
+    // To keep track of images
+
+    int image_counter = 0;
+
+    file_pointer == NULL;
+
+    // ###.jpg'\0' = 8
+    char imageNameAndNumber[8]
+
 
 
 
