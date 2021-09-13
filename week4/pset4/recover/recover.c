@@ -48,77 +48,11 @@ int main(int argc, char *argv[]){
         return 1;
     }
 
-
-    /* I think I'll want to index through the array, and if they four target bits are hit, then go on to fwrite a JPEG*/
-
-    // we have to have an iteration here, where fread will eventually depend on i
+    // All error checks pass at this point
 
 
 
-    for(int j = 1; j < sizeof(*read_data_buffer); j++){
-        
-        int *read_data_buffer = malloc( (sizeof(int) * BLOCK_SIZE) * j);
 
-        if(read_data_buffer == NULL){
-
-            printf("malloc error\n");
-            return 4;
-
-        }
-
-        fread(read_data_buffer, sizeof(int) * BLOCK_SIZE, j, raw_data);
-
-        for(int i = 0; i < (sizeof(int) * BLOCK_SIZE); i++){
-
-
-        if(read_data_buffer[i] == 0xff) {
-
-            printf("okay first one is good\n");
-
-            if(read_data_buffer[i + 1] == 0xd8){
-
-                if(read_data_buffer[i + 2] == 0xff){
-
-                    printf("!!! A !!!\n");
-
-                }
-
-            }
-
-        }
-
-        else{printf("B\n");}
-     }
-
-
-
-    }
-
-    // fread(read_data_buffer, sizeof(int) * BLOCK_SIZE, 1, raw_data);
-
-    // for(int i = 0; i < (sizeof(int) * BLOCK_SIZE); i++){
-
-    //     // This issue if my if statement, it's not finding the bit of that size. It only prints out B
-
-    //     if(read_data_buffer[i] == 0xff) {
-
-    //         if(read_data_buffer[i + 1] == 0xd8){
-
-    //             if(read_data_buffer[i + 2] == 0xff){
-
-    //                 printf("!!! A !!!\n");
-
-    //             }
-
-    //         }
-
-    //     }
-
-    //     else{printf("B\n");}
-    //  }
-
-    fclose(raw_data);
-    free(read_data_buffer);
 
 
 }
