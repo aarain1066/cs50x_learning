@@ -40,6 +40,8 @@ int main(void)
 person *create_family(int generations)
 {
     // TODO: Allocate memory for new person
+    // Basically, it's a new person ever time.
+    // Each person has parents (handled by else statement)
     person *new_person = malloc(sizeof(person));
     if(new_person == NULL){
 
@@ -53,9 +55,17 @@ person *create_family(int generations)
         // TODO: Recursively create blood type histories for parents
         // Base Case:
 
+        // __EACH__ parent is a person as well, and at some point in time, was a new person
+        // So... go back in time and create their family, up to n generations
 
+        new_person->parents[0] = create_family(generations - 1);
+        new_person->parents[1] = create_family(generations - 1);
 
         // TODO: Randomly assign child alleles based on parents
+
+        // Each person should have one random allele from EACH parent
+
+        // Refer to help section of CS50/Lab5 if confused by rand() % 2
 
         new_person -> alleles[0] = new_person->parents[0]->alleles[rand() % 2];
         new_person -> alleles[1] = new_person->parents[1]->alleles[rand() % 2];
@@ -65,10 +75,15 @@ person *create_family(int generations)
     else
     {
         // TODO: Set parent pointers to NULL
+
+        // End of the line, we don't know the family history past here
+        // So... set 'em NULL
         new_person -> parents[0] = NULL;
         new_person -> parents[1] = NULL;
 
         // TODO: Randomly assign alleles
+
+        // Leverage the function already made for random allele
 
         new_person -> alleles[0] = random_allele();
         new_person -> alleles[1] = random_allele();
@@ -83,10 +98,22 @@ person *create_family(int generations)
 void free_family(person *p)
 {
     // TODO: Handle base case
+    if(p == NULL){
 
-    // TODO: Free parents
+        free(p);
+    }
+    else{
 
-    // TODO: Free child
+        // TODO: Free parents
+        free_family(p -> parents[0]);
+        free_family(p -> parents[1]);
+        // TODO: Free child
+        free(p);
+    }
+
+
+
+
 }
 
 // Print each family member and their alleles.
