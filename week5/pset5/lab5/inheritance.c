@@ -41,11 +41,23 @@ person *create_family(int generations)
 {
     // TODO: Allocate memory for new person
     person *new_person = malloc(sizeof(person));
+    if(new_person == NULL){
+
+        printf("Error in memory allocation of person, try again");
+        
+    }
 
     // Generation with parent data
     if (generations > 1)
     {
         // TODO: Recursively create blood type histories for parents
+
+        /* Each person has two blood type alleles, where each one is given
+           by one of the parents. This means, we need to pass it into the
+           array of blood type for each person. The blood types are randomly
+           made func `random_allele()`. */
+
+        //new_person -> parent[0] =
 
         // TODO: Randomly assign child alleles based on parents
     }
