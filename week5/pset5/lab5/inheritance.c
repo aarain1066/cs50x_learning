@@ -57,24 +57,24 @@ person *create_family(int generations)
            array of blood type for each person. The blood types are randomly
            made func `random_allele()`. */
 
-           new_person->parent *create_family(generations - 1;)
+           //new_person->parent *create_family(generations - 1;)
 
         // TODO: Randomly assign child alleles based on parents
 
-        person -> allele
+        //person -> allele
     }
 
     // Generation without parent data
     else
     {
         // TODO: Set parent pointers to NULL
-        new_person -> *parents[0] = NULL;
-        new_person -> *parents[1] = NULL;
+        new_person -> parents[0] = NULL;
+        new_person -> parents[1] = NULL;
 
         // TODO: Randomly assign alleles
 
-        new_person -> allele[0] = random_allele();
-        new_perosn -> allele[0] = random_allele();
+        new_person -> alleles[0] = random_allele();
+        new_person -> alleles[0] = random_allele();
     }
 
     // TODO: Return newly created person
