@@ -51,17 +51,15 @@ person *create_family(int generations)
     if (generations > 1)
     {
         // TODO: Recursively create blood type histories for parents
+        // Base Case:
 
-        /* Each person has two blood type alleles, where each one is given
-           by one of the parents. This means, we need to pass it into the
-           array of blood type for each person. The blood types are randomly
-           made func `random_allele()`. */
 
-           //new_person->parent *create_family(generations - 1;)
+
 
         // TODO: Randomly assign child alleles based on parents
 
-        //person -> allele
+        new_person -> alleles[0] = new_person->parents[0]->alleles[rand() % 2];
+        new_person -> alleles[1] = new_person->parents[1]->alleles[rand() % 2];
     }
 
     // Generation without parent data
@@ -74,7 +72,7 @@ person *create_family(int generations)
         // TODO: Randomly assign alleles
 
         new_person -> alleles[0] = random_allele();
-        new_person -> alleles[0] = random_allele();
+        new_person -> alleles[1] = random_allele();
     }
 
     // TODO: Return newly created person
