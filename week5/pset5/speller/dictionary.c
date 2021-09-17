@@ -33,8 +33,32 @@ bool check(const char *word)
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    // TODO
-    return 0;
+
+    // For the canon of this course, it is recc. requested to find a hashing algo online.
+    /* I did some searching, and noticed some nice ones with varying complexity, that
+    produced very little collisions. However, at this time, it is not neccessary to find
+    the most optimal solution as this is a didactic scenario. A future consideration
+    would be to go back here and implement a more robust hashing algo. for now, the algo from
+    the following source (similar to an example in CS50) will do. */
+
+    // https://joseph28robinson.medium.com/cs50-pset-5-speller-f9c89d08237e
+    // by Austin Tackaberry
+
+    // Start w/ a default value
+    // Choosing long just incase for a larger word
+    long sum = 0;
+
+    // Iterate through each character of word
+    for (int i = 0; i < strlen(word); i++)
+    {
+        // lower case the word, retrieving a smaller value
+        // recall C will give the ASCII value, which is an int.
+        sum += tolower(word[i]);
+    }
+
+    // Mod the sum in order to get an int back.
+    return sum % N;
+
 }
 
 // Loads dictionary into memory, returning true if successful, else false
