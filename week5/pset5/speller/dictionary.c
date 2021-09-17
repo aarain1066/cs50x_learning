@@ -9,6 +9,10 @@
 
 #include "dictionary.h"
 
+// Global variable count for `size()`
+unsigned int counter = 0;
+
+
 // Represents a node in a hash table
 typedef struct node
 {
@@ -116,6 +120,7 @@ bool load(const char *dictionary)
 
             table[hash_table_index] = new_node;
             free(new_node);
+            counter++;
         }
         else{
 
@@ -125,6 +130,7 @@ bool load(const char *dictionary)
             table[hash_table_index] = new_node;
             return true;
             free(new_node);
+            counter++;
         }
 
 
@@ -143,8 +149,23 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    /* This isn't explicitly what the question asked for. Ideally, I would like
+    Something along the lines of if(!load(argv[1]) so we can functionally
+    see that the dictionary loaded, but this would be a huge waste of resrouces
+    to call the function again. I debated setting a trigger by defning a bool
+    global value to be true if dictionary loaded, but doing it by seeing if
+    counter > 0 saves more space and practically does the same thing.*/
+
+    if(counter > 0){
+
+        return counter;
+
+    }else{
+
+        return 0;
+
+    }
+
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
