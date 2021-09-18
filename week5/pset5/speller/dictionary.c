@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <string.h>
+#include <strings.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -30,15 +31,61 @@ node *table[N];
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
-    // TODO
+
+    // create a node for cursor
+
+    /* originally, i'd like this in the do statement in our do-while loop
+    but C doesn't like that, as it treats cursor as it won't exist if the
+    indexed hash if in fact NULL. C can't tell I only want it if
+    it isn't NULL, so throw it up here. */
+    node *cursor = malloc(sizeof(node));
+
+    // if the spot in the hash table isn't NULL
+
+    if(table[hash(word)] != NULL){
+
+        // assign a value to next in the cursor
+        do{
+            cursor -> next = table[hash(word)];
+        }
+        // if the word isn't a match
+        while(strcasecmp(word, cursor -> word) != 0);
+
+            /* I couldn't include the if NULL part in the while loop like (... && "word" -> next != NULL
+            because what happens if the last word is in fact a match? Then a false negative would trigger. */
+
+            // So... if it's pointer isn't NULL...
+            if(cursor -> next != NULL){
+
+                // point the cursor pointer ONTO the next pointer of the current cursor (lol read that slowly)
+                cursor = cursor -> next;
+            }
+            else{
+
+                // if the next point is NULL, this means you reach the end and haven't found the word.
+                // free the pointer and return false.
+                free(cursor);
+                return false;
+            }
+
+        // If you found the word, the while loop triggers false, and shoots you down here
+        // so free the memory and return true
+        free(cursor);
+        return true;
+    }
+
+    // and of course, if the actualy index in the hash table is indeed NULL
+    free(cursor);
     return false;
 }
+
 
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
 
     // For the canon of this course, it is recc. requested to find a hashing algo online.
+
     /* I did some searching, and noticed some nice ones with varying complexity, that
     produced very little collisions. However, at this time, it is not neccessary to find
     the most optimal solution as this is a didactic scenario. A future consideration
@@ -55,8 +102,8 @@ unsigned int hash(const char *word)
     // Iterate through each character of word
     for (int i = 0; i < strlen(word); i++)
     {
-        // lower case the word, retrieving a smaller value
-        // recall C will give the ASCII value, which is an int.
+
+        // `tolower()` for when we compare the words later in `check()`
         sum += tolower(word[i]);
     }
 
