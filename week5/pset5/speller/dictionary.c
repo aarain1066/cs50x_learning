@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <cs50.h>
 
 #include "dictionary.h"
 
@@ -23,7 +24,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 100000;
+const unsigned int N = 10000;
 
 // Hash table
 node *table[N];
@@ -33,52 +34,25 @@ bool check(const char *word)
 {
 
     // create a node for cursor
-
-    /* originally, i'd like this in the do statement in our do-while loop
-    but C doesn't like that, as it treats cursor as it won't exist if the
-    indexed hash if in fact NULL. C can't tell I only want it if
-    it isn't NULL, so throw it up here. */
-    node *cursor = malloc(sizeof(node));
+    int indexer = hash(word);
+    node *cursor = table[indexer];
 
     // if the spot in the hash table isn't NULL
 
-    if(table[hash(word)] != NULL){
+    while(cursor != NULL){
 
-        // assign a value to next in the cursor
-        do{
-            cursor -> next = table[hash(word)];
+        if(strcasecmp(cursor -> word, word) == 0){
+
+            return true;
         }
-        // if the word isn't a match
-        while(strcasecmp(word, cursor -> word) != 0);
+        else{
 
-            /* I couldn't include the if NULL part in the while loop like (... && "word" -> next != NULL
-            because what happens if the last word is in fact a match? Then a false negative would trigger. */
-
-            // So... if it's pointer isn't NULL...
-            if(cursor -> next != NULL){
-
-                // point the cursor pointer ONTO the next pointer of the current cursor (lol read that slowly)
-                cursor = cursor -> next;
-            }
-            else{
-
-                // if the next point is NULL, this means you reach the end and haven't found the word.
-                // free the pointer and return false.
-                free(cursor);
-                return false;
-            }
-
-        // If you found the word, the while loop triggers false, and shoots you down here
-        // so free the memory and return true
-        free(cursor);
-        return true;
+        cursor = cursor -> next;
+        }
     }
 
-    // and of course, if the actualy index in the hash table is indeed NULL
-    free(cursor);
     return false;
 }
-
 
 // Hashes word to a number
 unsigned int hash(const char *word)
@@ -97,7 +71,7 @@ unsigned int hash(const char *word)
 
     // Start w/ a default value
     // Choosing long just incase for a larger word
-    long sum = 0;
+    int sum = 0;
 
     // Iterate through each character of word
     for (int i = 0; i < strlen(word); i++)
@@ -108,7 +82,7 @@ unsigned int hash(const char *word)
     }
 
     // Mod the sum in order to get an int back.
-    return sum % N;
+    return (sum % N);
 
 }
 
@@ -132,6 +106,9 @@ bool load(const char *dictionary)
     // Must be large enough for any __real__ word, plus the '\0'
     char scanned_word[LENGTH + 1];
 
+
+
+
     while(fscanf(read_dictionary, "%s", scanned_word) != EOF){
 
         // A word is successfully scanned if while == TRUE, Therefore..
@@ -140,10 +117,10 @@ bool load(const char *dictionary)
         node *new_node = malloc(sizeof(node));
         // Check that the real-estate for this home is still available
         if(new_node == NULL){
-
             printf("Error in memory allocation of words from dictionary\n");
             return false;
         }
+
 
         // This is where we'll need string.h, to copy the words from scanned words into nodes
         // Copy the scanned word from the buffer, into the new_node's word field
@@ -153,7 +130,7 @@ bool load(const char *dictionary)
         new_node -> next = NULL;
 
         // Retrieve the hashing index from the hash function
-        unsigned int hash_table_index = hash(new_node -> word);
+        int hash_table_index = hash(scanned_word);
 
         /* This returns an unsigned int where it will determine where in our hash table does the house
         for our new home (the node) belongs. If a new_node is a home for a successfully scanned word,
@@ -166,8 +143,6 @@ bool load(const char *dictionary)
             and NULL for next */
 
             table[hash_table_index] = new_node;
-            free(new_node);
-            counter++;
         }
         else{
 
@@ -175,11 +150,8 @@ bool load(const char *dictionary)
 
             new_node -> next = table[hash_table_index];
             table[hash_table_index] = new_node;
-            return true;
-            free(new_node);
-            counter++;
         }
-
+        counter++;
 
         /* At this point, we'll need to has the words from the dictionary to determine where
         to assign the word intothe has table */
@@ -188,9 +160,8 @@ bool load(const char *dictionary)
         //table[hash(scanned_word)] -> word = scan;
 
     }
-
     fclose(read_dictionary);
-    return false;
+    return true;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
@@ -219,52 +190,16 @@ unsigned int size(void)
 bool unload(void)
 {
 
-    int not_nulls = 0;
-
-
     for(int i = 0; i < N; i++){
 
-        if(table[i] == NULL){
-            continue;
-        }
-        else{
-            node *temp = malloc(sizeof(node));
-            node *cursor = malloc(sizeof(node));
+        while(table[i] != NULL){
 
-            cursor = table[i];
-            temp = cursor;
-
-            if(cursor -> next != NULL){
-
-                cursor = cursor -> next;
-                free(temp);
-                temp = cursor;
-
-            }
-            else{
-                free(temp);
-                free(cursor);
-            }
+            node *cursor = table[i] -> next;
+            free(table[i]);
+            table[i] = cursor;
         }
     }
-
-    // final check to maketable sure all elements are NULL
-    for(int i = 0; i < N; i++){
-
-        if(table[i] != NULL){
-
-            not_nulls++;
-        }
-    }
-
-    if(not_nulls == 0){
-
-        return true;
-    }
-    else{
-
-        return false;
-    }
+    return true;
 
 }
 
