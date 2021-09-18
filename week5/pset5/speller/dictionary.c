@@ -23,7 +23,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 10000;
+const unsigned int N = 100000;
 
 // Hash table
 node *table[N];
@@ -218,6 +218,53 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
-    // TODO
-    return false;
+
+    int not_nulls = 0;
+
+
+    for(int i = 0; i < N; i++){
+
+        if(table[i] == NULL){
+            continue;
+        }
+        else{
+            node *temp = malloc(sizeof(node));
+            node *cursor = malloc(sizeof(node));
+
+            cursor = table[i];
+            temp = cursor;
+
+            if(cursor -> next != NULL){
+
+                cursor = cursor -> next;
+                free(temp);
+                temp = cursor;
+
+            }
+            else{
+                free(temp);
+                free(cursor);
+            }
+        }
+    }
+
+    // final check to maketable sure all elements are NULL
+    for(int i = 0; i < N; i++){
+
+        if(table[i] != NULL){
+
+            not_nulls++;
+        }
+    }
+
+    if(not_nulls == 0){
+
+        return true;
+    }
+    else{
+
+        return false;
+    }
+
 }
+
